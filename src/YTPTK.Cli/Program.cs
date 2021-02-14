@@ -24,8 +24,11 @@ namespace YTPTK.Cli
                 Console.WriteLine($"ytp v{versionString}");
                 Console.WriteLine("-------------");
                 Console.WriteLine("\nUsage:");
-                Console.WriteLine("  ytp init <GOOGLE_API_KEY>");
-                Console.WriteLine("  ytp <PLAYLIST_LINK|PLAYLIST_ID>");
+                Console.WriteLine("  ytp init <GOOGLE_API_KEY>              # GOOGLE_API_KEY: youtube data api key");
+                Console.WriteLine(
+                    "  ytp <PLAYLIST_LINK|PLAYLIST_ID>        # PLAYLIST_LINK|PLAYLIST_ID: full playlist link or id from url");
+                Console.WriteLine(
+                    "  ytp file <FILE_PATH>                   # FILE_PATH: path to a file which will contain playlist ids or playlist links on each line, only separated by EOL");
             }
 
             if (args.Length == 2 && args[0] == "init")
