@@ -50,7 +50,8 @@ namespace YTPTK.Cli
                     string[] playlistIds = src.Split(Environment.NewLine);
 
                     Credentials credentials = await ReadCredentials();
-                    PlaylistService = new PlaylistService(credentials.ApiKey);
+                    var youtubeService = YoutubeServiceFactory.Create(credentials.ApiKey);
+                    PlaylistService = new PlaylistService(youtubeService);
 
                     List<Task> logPlaylistTask = playlistIds.Select(playlistId => LogPlaylist(playlistId)).ToList();
 
@@ -70,7 +71,8 @@ namespace YTPTK.Cli
                 try
                 {
                     Credentials credentials = await ReadCredentials();
-                    PlaylistService = new PlaylistService(credentials.ApiKey);
+                    var youtubeService = YoutubeServiceFactory.Create(credentials.ApiKey);
+                    PlaylistService = new PlaylistService(youtubeService);
 
                     await LogPlaylist(args[0]);
                 }

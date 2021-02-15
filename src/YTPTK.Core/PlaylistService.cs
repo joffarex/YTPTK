@@ -11,16 +11,14 @@ namespace YTPTK.Core
 {
     public class PlaylistService
     {
-        public PlaylistService(string apiKey)
+        public PlaylistService(YouTubeService youTubeService)
         {
-            var initializer = new BaseClientService.Initializer();
-            initializer.ApiKey = apiKey;
-            YouTubeService = new YouTubeService(initializer);
+            YouTubeService = youTubeService;
         }
 
         private YouTubeService YouTubeService { get; }
 
-        public static int ParseDurationToSeconds(string playlistDuration)
+        public int ParseDurationToSeconds(string playlistDuration)
         {
             var days = 0;
             var hours = 0;
