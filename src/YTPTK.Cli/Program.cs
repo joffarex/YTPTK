@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Google.Apis.YouTube.v3;
 using YTPTK.Core;
 
 namespace YTPTK.Cli
@@ -50,7 +51,7 @@ namespace YTPTK.Cli
                     string[] playlistIds = src.Split(Environment.NewLine);
 
                     Credentials credentials = await ReadCredentials();
-                    var youtubeService = YoutubeServiceFactory.Create(credentials.ApiKey);
+                    YouTubeService youtubeService = YoutubeServiceFactory.Create(credentials.ApiKey);
                     PlaylistService = new PlaylistService(youtubeService);
 
                     List<Task> logPlaylistTask = playlistIds.Select(playlistId => LogPlaylist(playlistId)).ToList();
@@ -71,7 +72,7 @@ namespace YTPTK.Cli
                 try
                 {
                     Credentials credentials = await ReadCredentials();
-                    var youtubeService = YoutubeServiceFactory.Create(credentials.ApiKey);
+                    YouTubeService youtubeService = YoutubeServiceFactory.Create(credentials.ApiKey);
                     PlaylistService = new PlaylistService(youtubeService);
 
                     await LogPlaylist(args[0]);

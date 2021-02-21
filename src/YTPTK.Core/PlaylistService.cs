@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using Google.Apis.Services;
 using Google.Apis.YouTube.v3;
 using Google.Apis.YouTube.v3.Data;
 using YtPlaylist = Google.Apis.YouTube.v3.Data.Playlist;
@@ -11,10 +10,7 @@ namespace YTPTK.Core
 {
     public class PlaylistService
     {
-        public PlaylistService(YouTubeService youTubeService)
-        {
-            YouTubeService = youTubeService;
-        }
+        public PlaylistService(YouTubeService youTubeService) => YouTubeService = youTubeService;
 
         private YouTubeService YouTubeService { get; }
 
@@ -127,17 +123,17 @@ namespace YTPTK.Core
             return response;
         }
 
-        public IEnumerable<string> GetPlaylistPageVideoIds(IEnumerable<PlaylistItem> playlistItems)
-        {
-            return playlistItems.Select(playlistItem => playlistItem.ContentDetails.VideoId).ToList();
-        }
-
         public async Task<VideoListResponse> FetchVideos(IEnumerable<string> videoIds)
         {
             VideosResource.ListRequest request = YouTubeService.Videos.List("contentDetails,id,status,snippet");
             request.Id = string.Join(",", videoIds);
             VideoListResponse response = await request.ExecuteAsync();
             return response;
+        }
+
+        private static IEnumerable<string> GetPlaylistPageVideoIds(IEnumerable<PlaylistItem> playlistItems)
+        {
+            return playlistItems.Select(playlistItem => playlistItem.ContentDetails.VideoId).ToList();
         }
     }
 }
