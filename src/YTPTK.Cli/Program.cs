@@ -35,7 +35,7 @@ namespace YTPTK.Cli
             if (args.Length == 2 && args[0] == "init")
             {
                 var credentials = new Credentials {ApiKey = args[1]};
-                using FileStream stream = File.Create("credentials.json");
+                using FileStream stream = File.Create(GetCredentialsPath());
                 await JsonSerializer.SerializeAsync(stream, credentials);
 
                 Console.WriteLine("API_KEY saved...");
@@ -93,10 +93,23 @@ namespace YTPTK.Cli
 
         private static async Task<Credentials> ReadCredentials()
         {
-            using FileStream stream = File.OpenRead("credentials.json");
+            await using FileStream stream = File.OpenRead(GetCredentialsPath());
             var credentials = await JsonSerializer.DeserializeAsync<Credentials>(stream);
 
             return credentials;
+        }
+
+        private static string GetCredentialsPath()
+        {
+            string appDataPath =
+                Directory.GetParent(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData))
+                    ?.FullName ?? throw new ArgumentNullException($"AppData not found");
+
+            var userFolderPath = Directory.GetParent(appDataPath)!.ToString();
+
+            DirectoryInfo dir = Directory.CreateDirectory(Path.Combine(userFolderPath, ".ytp"));
+
+            return Path.Combine(dir.FullName, "credentials.json");
         }
     }
 }
