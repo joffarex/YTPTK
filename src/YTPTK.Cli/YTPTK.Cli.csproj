@@ -9,6 +9,8 @@
         <ToolCommandName>ytp</ToolCommandName>
         <PublishTrimmed>true</PublishTrimmed>
         <PublishReadyToRun>true</PublishReadyToRun>
+        <AssemblyName>ytp</AssemblyName>
+        <TargetName>ytp</TargetName>
     </PropertyGroup>
 
     <ItemGroup>
